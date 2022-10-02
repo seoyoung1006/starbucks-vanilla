@@ -16,22 +16,40 @@ searchInputEl.addEventListener('blur', function() {
 });
 
 const badgeEl = document.querySelector('header .badges');
+const toTopEl = document.querySelector('#to-top');
 
 window.addEventListener('scroll', _.throttle(function () {
   console.log(window.scrollY);
   if (window.scrollY > 500) {
+    // 배지 숨기기
+    // gsap.to(요소, 지속시간, 옵션);
     gsap.to(badgeEl, .6, {
       opacity: 0,
       display: 'none'
+    });
+    //버튼보이기!
+    gsap.to(toTopEl, .2, {
+      x: 0
     });
   } else {
     gsap.to(badgeEl, .6, {
       opacity: 1,
       display: 'block'
     });
+    //버튼 숨기기!!
+    gsap.to(toTopEl, .2, {
+      x: 100
+    });
   }
 }, 300));
 //_.throttle(함수, 시간)
+
+
+toTopEl.addEventListener('click', function () {
+  gsap.to(window, .7, {
+    scrollTo: 0  //scroll plugin url필수
+  });
+})
 
 
 const fadeEls = document.querySelectorAll('.visual .fade-in');
@@ -98,7 +116,7 @@ promotionToggleBtn.addEventListener('click', function () {
 function random(min, max) {
   // `.toFixed()`를 통해 반환된 문자 데이터를,
   // `parseFloat()`을 통해 소수점을 가지는 숫자 데이터로 변환
-  return parseFloat((Math.random() * (max - min) + min))
+  return parseFloat((Math.random() * (max - min) + min).toFixed(2))
 }
 
 
@@ -108,28 +126,28 @@ function floatingObject(selector, delay, size) {
     selector, //선택자
     random(1.5, 2.5),  //애니메이션 동작 시간
     { //옵션
-      y: 20,
+      y: size,
       repeat: -1, //무한반복
       yoyo: true, //위아래 왔다갔다
       ease: Power1.easeInOut,
       delay: random(0, delay)
     }
-  );
+  )
 }
-floatingObject('.floating1', 1, 15);
-floatingObject('.floating2', .5, 15);
-floatingObject('.floating3', 1.5, 20);
+floatingObject('.floating1', 1, 15)
+floatingObject('.floating2', .5, 15)
+floatingObject('.floating3', 1.5, 20)
 
 
 const spyEls = document.querySelectorAll('section.scroll-spy');
 spyEls.forEach(function (spyEl) {
   new ScrollMagic
-  .Scene({
-    triggerElement: spyEl,//화면에 보이는지 안보이는지 감시하는 메소드(Scene)
-    triggerHook: .8
-  }) 
-  .setClassToggle(spyEl, 'show')
-  .addTo(new ScrollMagic.Controller()); 
+    .Scene({
+      triggerElement: spyEl,//화면에 보이는지 안보이는지 감시하는 메소드(Scene)
+      triggerHook: .8
+    }) 
+    .setClassToggle(spyEl, 'show')
+    .addTo(new ScrollMagic.Controller()); 
 });
 
 
