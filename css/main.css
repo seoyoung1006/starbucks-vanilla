@@ -774,6 +774,7 @@ header .badges .badge {
   top: 0;
   bottom: 0;
   margin: auto;
+  transition: .4s;
 }
 .awards .swiper-prev {
   left: -100px;
